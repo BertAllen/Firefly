@@ -1,0 +1,57 @@
+<html ng-app="MasterController">
+<head>
+    <meta charset="UTF-8">
+    <title>Firefly Simulation</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/style.css">
+    
+    <style>
+body {
+background: #000;
+}
+/*#canvas {
+margin: 20px;
+padding: 20px;
+background: #ffffff;
+border: thin inset #aaaaaa;
+width: 600px;
+height: 300px;
+}*/
+
+.grasslands{
+    height: 500px;
+    width: 500px;
+    background-color: lawngreen;
+    position: relative;
+}
+
+.quilt{
+    height:4px;
+    width:4px;
+    background-color: steelblue;
+    position: absolute;
+}
+</style>
+    
+</head>
+<body ng-controller="FireflyController as fc">
+    {{2+2}}
+    <div class="quilt"></div>
+    <!--<canvas id="canvas">
+Canvas not supported
+</canvas>
+
+<canvas id="example" width="200" height="200">
+This text is displayed if your browser does not support HTML5 Canvas.
+</canvas>-->
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="app/app.js"></script>
+        <script src="app/firefly.js"></script>
+
+</body>
+</html>
