@@ -6,47 +6,20 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/style.css">
     
-    <style>
-body {
-background: #000;
-}
-/*#canvas {
-margin: 20px;
-padding: 20px;
-background: #ffffff;
-border: thin inset #aaaaaa;
-width: 600px;
-height: 300px;
-}*/
-
-/*.grasslands{
-    height: 500px;
-    width: 500px;
-    background-color: lawngreen;
-    position: relative;
-}*/
-
-/*.quilt{
-    height: 4px;
-    width:4px;
-    background-color: steelblue;
-    position: absolute;
-}*/
-</style>
+    
     
 </head>
-<body ng-controller="FireflyController as fc">
+<body style="background: #444;" ng-controller="FireflyController as fc">
     {{2+2}}
     <button ng-click="nightTime()">{{btnText}}</button>
-    <div ng-repeat="x in quilt">
-            <div ng-repeat="y in x">
-
-    <div style="position: absolute; width:4px; height:4px; background: rgb()"></div>
+    <div ng-repeat="bush in quilt">
+            <div ng-repeat="bug in bush">
+    <div style="position: absolute; top: {{bug.yy*4}}; left: {{bug.xx*4}} width: 4px; height: 4px; background: rgb({{bug.red}}, {{bug.green}}, {{bug.blue}})"></div>
 </div>
 </div>
 
     <!--<canvas id="canvas">
-Canvas not supported
+Canvas not supported   style="top: {{y}}%; left: {{x}}%"
 </canvas>
 
 <canvas id="example" width="200" height="200">

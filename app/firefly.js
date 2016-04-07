@@ -13,6 +13,8 @@ app.controller("FireflyController", function($scope) {
                     green: Math.floor(Math.random() * 256),
                     blue: Math.floor(Math.random() * 256),
                     neighbors: [],
+                    xx: x,
+                    yy: y,
                 }
                 $scope.quilt[x][y] = obj;
             }
