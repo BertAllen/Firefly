@@ -37,25 +37,8 @@ app.controller("FireflyController", function($scope) {
             }
         }
         return $scope.quilt;
-    }
+    }//end of colorLayer function
 
-    $scope.nightTime = function() {
-        // debugger;
-        if ($scope.btnText === "Start") {
-            $scope.btnText = "End";
-            $scope.colorLayer();
-        } else {
-            $scope.btnText = "Start";
-        }
-        while ($scope.btnText === "End") {
-            for (var x = 0; x < 80; x++){
-                for (var y = 0; y < 80; y++){
-                    $scope.syncron($scope.quilt[x][y]);
-//print out quilt obj here ...........
-                }
-            }
-        }
-}//end nightTime function    
 
     //syncron --v      package com.Atavia;
 
@@ -103,6 +86,24 @@ app.controller("FireflyController", function($scope) {
             obj[color] = result;
         }
 
-    }
+    }// end of syncron function
+
+    $scope.nightTime = function() {
+        if ($scope.btnText === "Start") {
+            $scope.btnText = "End";
+            $scope.colorLayer();
+        } else {
+            $scope.btnText = "Start";
+        }
+        while ($scope.btnText === "End") {
+        debugger;
+            for (var x = 0; x < 80; x++) {
+                for (var y = 0; y < 80; y++) {
+                    $scope.syncron($scope.quilt[x][y]);
+                    //print out quilt obj here ...........
+                }
+            }
+        }
+    }//end nightTime function 
 
 })
