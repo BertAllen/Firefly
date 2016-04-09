@@ -95,15 +95,16 @@ app.controller("FireflyController", function($scope) {
         } else {
             $scope.btnText = "Start";
         }
-        while ($scope.btnText === "End") {
-        debugger;
+        // while ($scope.btnText === "End") {
+        // debugger;
             for (var x = 0; x < 80; x++) {
                 for (var y = 0; y < 80; y++) {
                     $scope.syncron($scope.quilt[x][y]);
                     //print out quilt obj here ...........
                 }
             }
-        }
+        // }
+        // debugger;
     }//end nightTime function 
 
 })
