@@ -1,9 +1,9 @@
-app.controller("FireflyController", function($scope) {
+app.controller("FireflyController", function ($scope) {
     $scope.btnText = "Start";
     //color layer --v
 
     $scope.quilt = [];
-    $scope.colorLayer = function() {
+    $scope.colorLayer = function () {
         //populating the grid    
         for (var x = 0; x < 80; x++) {
             $scope.quilt[x] = [];
@@ -42,7 +42,7 @@ app.controller("FireflyController", function($scope) {
 
     //syncron --v      package com.Atavia;
 
-    $scope.syncron = function(obj) {
+    $scope.syncron = function (obj) {
         //short[] exam = new short[9];
         //values are passed to the exam array here, unit zero is the center of the 3x3 block
         // Syncron (exam[]<short>) {
@@ -88,7 +88,7 @@ app.controller("FireflyController", function($scope) {
 
     }// end of syncron function
 
-    $scope.nightTime = function() {
+    $scope.nightTime = function () {
         if ($scope.btnText === "Start") {
             $scope.btnText = "End";
             $scope.colorLayer();
@@ -97,14 +97,92 @@ app.controller("FireflyController", function($scope) {
         }
         // while ($scope.btnText === "End") {
         // debugger;
-            for (var x = 0; x < 80; x++) {
-                for (var y = 0; y < 80; y++) {
-                    $scope.syncron($scope.quilt[x][y]);
-                    //print out quilt obj here ...........
-                }
+        for (var x = 0; x < 80; x++) {
+            for (var y = 0; y < 80; y++) {
+                $scope.syncron($scope.quilt[x][y]);
+                //print out quilt obj here ...........
+                /*
+                * style="position: absolute; top: ; left: ; width: 4px; height: 4px; background: #ffddaa"                    
+                */
+
+                $(document).ready(function () {
+                    debugger;
+                    var unitSize = 6; // width (and height) of one square
+                    var unitsWide = 80; // number of squares along x-axis
+                    var unitsTall = 80; // number of squares along y-axis
+                    var field = $('<div class="drawing"></div>').css({
+                        overflow: 'hidden',
+                        border: '16px solid #000000',
+                        width: unitSize * unitsWide
+                    });
+
+                    var squareColor = $scope.colorConverter($scope.quilt[x][y]);
+
+                    // var field = $('#field');
+                    $('<span class="square"></span>').css({
+                        display: 'block',
+                        float: 'left',
+                        width: 6,
+                        height: 6,
+                        'background-color': squareColor
+                    }).appendTo(field);
+                    // if (y == 79) {
+                    //     $('</br>').css({
+                    //     display: 'block',
+                    //     float: 'left',
+                    //     width: 6,
+                    //     height: 6,
+                    // }).appendTo(field);
+                    // }
+                    // old code that didn't really work --v
+                    // var target = document.getElementById("field").style; 
+                    // target.top = y * 4;
+                    // target.left = x * 4;
+                    // target.background = rgb($scope.quilt[x][y].red, $scope.quilt[x][y].green, $scope.$scope.quilt[x][y].blue);
+                    // end of non-working "legacy" code --^
+
+                });
             }
-        // }
+        }
         // debugger;
     }//end nightTime function 
+
+    // colors converted to hex values here --v
+    $scope.colorConverter = function (obj) {
+        var colorOut = "#";
+        colorOut += obj.red.toString(16);
+        colorOut += obj.green.toString(16);
+        colorOut += obj.blue.toString(16);
+        return colorOut;
+    }
+
+    //colored square drawing function --v
+    // $(document).ready(function () {
+    //     var unitSize = 16; // width (and height) of one square
+    //     var unitsWide = 6; // number of squares along x-axis
+    //     var unitsTall = 6; // number of squares along y-axis
+    //     var drawing = $('<div class="drawing"></div>').css({
+    //         overflow: 'hidden',
+    //         border: '16px solid #000000',
+    //         width: unitSize * unitsWide
+    //     });
+    //     for (var i = 0; i < unitsWide * unitsTall; i++) {
+    //         var randomColor;
+    //         randomColor = Math.random() * 0x1000000; // 0 < randomColor < 0x1000000
+    //         randomColor = Math.floor(randomColor); // 0 < randomColor <= 0xFFFFFF
+    //         randomColor = randomColor.toString(16); // hex representation randomColor
+    //         randomColor = ("000000" + randomColor).slice(-6); // leading zeros added
+    //         randomColor = "#" + randomColor; // # added
+    //         $('<span class="square"></span>').css({
+    //             display: 'block',
+    //             float: 'left',
+    //             width: unitSize,
+    //             height: unitSize,
+    //             'background-color': randomColor
+    //         }).appendTo(drawing);
+    //     }
+    //     drawing.appendTo($("body"));
+    // });
+    // end of colored square drawing function --^
 
 })

@@ -12,11 +12,16 @@
 <body style="background: #444;" ng-controller="FireflyController as fc">
     {{2+2}}
     <button ng-click="nightTime()">{{btnText}}</button>
-    <div ng-repeat="bush in quilt">
-            <div ng-repeat="bug in bush">
-    <div style="position: absolute; top: {{bug.yy*4}}; left: {{bug.xx*4}} width: 4px; height: 4px; background: rgb({{bug.red}}, {{bug.green}}, {{bug.blue}})"></div>
+    <!--<div ng-repeat="bush in quilt track by $index">
+            <div ng-repeat="bug in bush track by $index">-->
+        <!--<h4>A bug {{item}}</h4>-->
+                
+        <div id="field"></div>
+<!--<div id="field" style="position: absolute; top: {{bug.yy*4}}; left: {{bug.xx*4}} width: 4px; height: 4px; background: rgb({{bug.red}}, {{bug.green}}, {{bug.blue}})"></div>-->
 </div>
-<div style="width:500px;height:100px;border:3px solid rgb(bug.red,bug.green,bug.blue);">This is a rectangle!</div>
+<!--<div style="width:500px;height:100px;border:3px solid rgb({{bug.red}},{{bug.green}},{{bug.blue}});">This is a rectangle!</div>-->
+
+<!--document.getElementById("xyz").style.padding-top = "10px";-->
 
 </div>
 
