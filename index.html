@@ -10,8 +10,14 @@
     
 </head>
 <body style="background: #444;" ng-controller="FireflyController as fc">
-    {{2+2}}
-    <button ng-click="nightTime()">{{btnText}}</button>
+    <!--{{2+2}}-->
+    <button ng-click="waitForMe()">{{btnText}}</button>
+    <label for="Redish"></label>
+    <input name="Redish" type="checkbox" ng-model="redish">
+    <label for="Greenish"></label>
+    <input name="Greenish" type="checkbox" ng-model="greenish">
+    <label for="Blueish"></label>
+    <input name="Blueish" type="checkbox" ng-model="blueish">
     <!--<div ng-repeat="bush in quilt track by $index">
             <div ng-repeat="bug in bush track by $index">-->
         <!--<h4>A bug {{item}}</h4>-->

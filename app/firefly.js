@@ -1,5 +1,8 @@
-app.controller("FireflyController", function ($scope) {
+app.controller("FireflyController", function ($scope, $interval) {
     $scope.btnText = "Start";
+    $scope.redish = true
+    $scope.greenish = true
+    $scope.blueish = true
     //color layer --v
 
     $scope.quilt = [];
@@ -89,13 +92,16 @@ app.controller("FireflyController", function ($scope) {
     }// end of syncron function
 
     $scope.nightTime = function () {
+        $('#field').empty();
         if ($scope.btnText === "Start") {
             $scope.btnText = "End";
             $scope.colorLayer();
         } else {
             $scope.btnText = "Start";
         }
-        // while ($scope.btnText === "End") {
+        // var looper = 0
+        // while (looper<5){
+        // while ($scope.reddish || $scope.greenish || $scope.blueish) {
         // debugger;
         for (var x = 0; x < 80; x++) {
             for (var y = 0; y < 80; y++) {
@@ -104,32 +110,11 @@ app.controller("FireflyController", function ($scope) {
                 /*
                 * style="position: absolute; top: ; left: ; width: 4px; height: 4px; background: #ffddaa"                    
                 */
-
-                $(document).ready(function () {
-                    debugger;
-                    var unitSize = 6; // width (and height) of one square
-                    var unitsWide = 80; // number of squares along x-axis
-                    var unitsTall = 80; // number of squares along y-axis
-                    var field = $('#field').css({
-                        overflow: 'hidden',
-                        border: '16px solid #000000',
-                        width: unitSize * unitsWide +32
-                    });
-
                     var squareColor = $scope.colorConverter($scope.quilt[x][y]);
 
-                    // var field = $('#field');
-                    $('<span class="square"></span>').css({
-                        display: 'block',
-                        float: 'left',
-                        // position: fixed,
-                        top: y * unitSize,
-                        left: x * unitSize,
-                        width: unitSize,
-                        height: unitSize,
-                        'background-color': squareColor
-                    }).appendTo(field)
-                        // .appendTo($("body"));
+                    drawMe(squareColor);                    
+
+                    // .appendTo($("body"));
 
                     // if (y == 79) {
                     //     $('</br>').css({
@@ -146,12 +131,43 @@ app.controller("FireflyController", function ($scope) {
                     // target.background = rgb($scope.quilt[x][y].red, $scope.quilt[x][y].green, $scope.$scope.quilt[x][y].blue);
                     // end of non-working "legacy" code --^
 
-                            // field.appendTo($("body"));
-                });
+                    // field.appendTo($("body"));
+                    // if (x === 79 && y === 79 && field.length > 6400) {
+                    //     field.splice(0, 6400);
+                    // }
             }//end of y loop
         }//end of x loop
         // debugger;
+        //     looper++;
+        // }
     }//end nightTime function 
+
+    drawMe = function (squareColor) {
+                $(document).ready(function () {
+                    var unitSize = 6; // width (and height) of one square
+                    var unitsWide = 80; // number of squares along x-axis
+                    var unitsTall = 80; // number of squares along y-axis
+                    var field = $('#field').css({
+                        overflow: 'hidden',
+                        border: '16px solid #000000',
+                        width: unitSize * unitsWide + 32
+                    });
+
+                    // var field = $('#field');
+                    $('<span class="square"></span>').css({
+                        display: 'block',
+                        float: 'left',
+                        // position: fixed,
+                        // top: y * unitSize,
+                        // left: x * unitSize,
+                        width: unitSize,
+                        height: unitSize,
+                        'background-color': squareColor
+                    }).appendTo(field)
+                });
+    
+}
+
 
     // colors converted to hex values here --v
     $scope.colorConverter = function (obj) {
@@ -191,4 +207,15 @@ app.controller("FireflyController", function ($scope) {
     // });
     // end of colored square drawing function --^
 
+// timeout function that will allow for updating the view --v    
+    $scope.waitForMe = function () {
+        // var count = 5;
+        var x = $interval(function(){  
+            // count--;
+            $scope.nightTime();
+            if (!$scope.reddish || !$scope.greenish || !$scope.blueish) {
+                $interval.cancel(x)
+            }
+        }, 3000, 5)
+    }
 })
