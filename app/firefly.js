@@ -110,10 +110,10 @@ app.controller("FireflyController", function ($scope) {
                     var unitSize = 6; // width (and height) of one square
                     var unitsWide = 80; // number of squares along x-axis
                     var unitsTall = 80; // number of squares along y-axis
-                    var field = $('<div class="drawing"></div>').css({
+                    var field = $('#field').css({
                         overflow: 'hidden',
                         border: '16px solid #000000',
-                        width: unitSize * unitsWide
+                        width: unitSize * unitsWide +32
                     });
 
                     var squareColor = $scope.colorConverter($scope.quilt[x][y]);
@@ -122,10 +122,15 @@ app.controller("FireflyController", function ($scope) {
                     $('<span class="square"></span>').css({
                         display: 'block',
                         float: 'left',
-                        width: 6,
-                        height: 6,
+                        // position: fixed,
+                        top: y * unitSize,
+                        left: x * unitSize,
+                        width: unitSize,
+                        height: unitSize,
                         'background-color': squareColor
-                    }).appendTo(field);
+                    }).appendTo(field)
+                        // .appendTo($("body"));
+
                     // if (y == 79) {
                     //     $('</br>').css({
                     //     display: 'block',
@@ -141,9 +146,10 @@ app.controller("FireflyController", function ($scope) {
                     // target.background = rgb($scope.quilt[x][y].red, $scope.quilt[x][y].green, $scope.$scope.quilt[x][y].blue);
                     // end of non-working "legacy" code --^
 
+                            // field.appendTo($("body"));
                 });
-            }
-        }
+            }//end of y loop
+        }//end of x loop
         // debugger;
     }//end nightTime function 
 
