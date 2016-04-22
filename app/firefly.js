@@ -20,6 +20,9 @@ app.controller("FireflyController", function ($scope, $interval) {
                     yy: y,
                 }
                 $scope.quilt[x][y] = obj;
+                var squareColor = $scope.colorConverter($scope.quilt[x][y]);
+                    drawMe(squareColor);                                       
+           
             }
         }
         //wiring the grid
@@ -89,11 +92,12 @@ app.controller("FireflyController", function ($scope, $interval) {
     $scope.nightTime = function () {
         $('#field').empty();
         if ($scope.btnText === "Start") {
-            $scope.btnText = "End";
+            $scope.btnText = "Continue";
             // $scope.colorLayer();
-        } else {
-            $scope.btnText = "Start";
         }
+        // else {
+        //     $scope.btnText = "Start";
+        // }
 
         for (var x = 0; x < 80; x++) {
             for (var y = 0; y < 80; y++) {
@@ -101,7 +105,6 @@ app.controller("FireflyController", function ($scope, $interval) {
                 //print out quilt obj here ...........
                
                     var squareColor = $scope.colorConverter($scope.quilt[x][y]);
-
                     drawMe(squareColor);                                       
             }//end of y loop
         }//end of x loop
@@ -128,7 +131,9 @@ app.controller("FireflyController", function ($scope, $interval) {
                         width: unitSize,
                         height: unitSize,
                         'background-color': squareColor
-                    }).appendTo(field)
+                    }).appendTo(field);
+                    // $(window).trigger('resize'); //attempt to force redraw
+
                 });   
 }// end of drawMe function
 
@@ -144,14 +149,17 @@ app.controller("FireflyController", function ($scope, $interval) {
  
 // timeout function that will allow for updating the view --v    
     $scope.waitForMe = function () {
-        $scope.colorLayer();
+        if ($scope.btnText === "Start") {
+            $scope.colorLayer();
+        }     
         // var count = 5;
-        var x = $interval(function(){  
+        // var x = $interval(function(){  
+        // for (var ticks = 0; ticks < 5; ticks++){
             // count--;
             $scope.nightTime();
-            if (!$scope.reddish || !$scope.greenish || !$scope.blueish) {
-                $interval.cancel(x)
-            }
-        }, 3000 )
+            // if (!$scope.reddish || !$scope.greenish || !$scope.blueish) {
+            //     // $interval.cancel(x)
+            // }
+        // } //, 3000 )
     }
 })
