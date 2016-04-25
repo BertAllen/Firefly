@@ -16,8 +16,8 @@ app.controller("FireflyController", function ($scope, $interval) {
                     green: Math.floor(Math.random() * 256),
                     blue: Math.floor(Math.random() * 256),
                     neighbors: [],
-                    xx: x,
-                    yy: y,
+                    // xx: x,
+                    // yy: y,
                 }
                 $scope.quilt[x][y] = obj;
                 var squareColor = $scope.colorConverter($scope.quilt[x][y]);
@@ -54,30 +54,47 @@ app.controller("FireflyController", function ($scope, $interval) {
             }
             var blockValue = 0;
             //short[] test = new short[1];
+                var buddies = 0;
             for (var i = 0; i < 8; i++) {
                 var test = obj.neighbors[i][color] - obj[color];
-                if (test < -150) { blockValue += 256; }
-                if (test > 150) { blockValue -= 256; }
+                var flag = 0;
+                if (test < -150) {
+                    blockValue += 256;
+                    flag = 1;
+                    buddies++;
+                }
+                if (test > 150) {
+                    blockValue -= 256;
+                    flag = 1;
+                    buddies--;
+                }
                 blockValue += obj.neighbors[i][color];
+                if (!flag) {
+                    if (test < 0) {
+                        buddies--;
+                    } else {
+                        buddies++;
+                    }
+                }
             }
             var average = blockValue / 8;
             //how to react to syncro logic result
             //public SyncroLogicResult() {
             var result = obj[color];
             //if (average-exam[0] ==0); {result = exam[0];} <<--this line not needed
-            if (average - result < 0 && average - result > -51) {
+            if (average - result < 0 && average - result > -51 && buddies < 0) {
                 result -= 1;
                 if (result < 0) {
                     result += 256;
                 }
             }
-            if (average - result > 0 && average - result < 51) {
+            if (average - result > 0 && average - result < 51 && buddies >0) {
                 result += 1;
                 if (result > 255) {
                     result -= 256;
                 }
             }
-            if (average - result >= 51 && average - result < 101) {
+            if (average - result >= 51 && average - result < 101 && buddies >0) {
                 result += 2;
                 if (result > 255) {
                     result -= 256;
