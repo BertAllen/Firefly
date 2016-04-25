@@ -47,16 +47,18 @@ app.controller("FireflyController", function ($scope, $interval) {
 
     //syncron --v      package com.Atavia;
     $scope.syncron = function (obj) {
+        var color = ["red", "green", "blue"]
           //here is the syncro logic
-        for (color in obj) {
-            if (color != "red" && color != "green" && color != "blue") {
-                return;
-            }
+        for (n = 0; n < 3; n++) {
+            var tint = color[n];
+            // if (color != "red" && color != "green" && color != "blue") {
+            //     return;
+            // }
             var blockValue = 0;
             //short[] test = new short[1];
                 var buddies = 0;
             for (var i = 0; i < 8; i++) {
-                var test = obj.neighbors[i][color] - obj[color];
+                var test = obj.neighbors[i][tint] - obj[tint];
                 var flag = 0;
                 if (test < -150) {
                     blockValue += 256;
@@ -68,7 +70,7 @@ app.controller("FireflyController", function ($scope, $interval) {
                     flag = 1;
                     buddies--;
                 }
-                blockValue += obj.neighbors[i][color];
+                blockValue += obj.neighbors[i][tint];
                 if (!flag) {
                     if (test < 0) {
                         buddies--;
@@ -80,7 +82,7 @@ app.controller("FireflyController", function ($scope, $interval) {
             var average = blockValue / 8;
             //how to react to syncro logic result
             //public SyncroLogicResult() {
-            var result = obj[color];
+            var result = obj[tint];
             //if (average-exam[0] ==0); {result = exam[0];} <<--this line not needed
             if (average - result < 0 && average - result > -51 && buddies < 0) {
                 result -= 1;
@@ -101,9 +103,9 @@ app.controller("FireflyController", function ($scope, $interval) {
                 }
             }
             //return;//code here needs to take care of the "no change" case 
-            obj[color] = result;
+            obj[tint] = result;
         }
-
+        return;
     }// end of syncron function
 
     $scope.nightTime = function () {
@@ -158,9 +160,21 @@ app.controller("FireflyController", function ($scope, $interval) {
     // colors converted to hex values here --v
     $scope.colorConverter = function (obj) {
         var colorOut = "#";
-        colorOut += obj.red.toString(16);
-        colorOut += obj.green.toString(16);
-        colorOut += obj.blue.toString(16);
+        if (!$scope.redish) {
+            colorOut += 00;
+        } else {
+            colorOut += obj.red.toString(16);
+        }
+        if (!$scope.greenish) {
+            colorOut += 00;
+        }else{
+            colorOut += obj.green.toString(16);
+        }
+        if (!$scope.blueish) {
+            colorOut += 00;
+        }else{
+            colorOut += obj.blue.toString(16);
+        }    
         return colorOut;
     }
  
