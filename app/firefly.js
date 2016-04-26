@@ -21,8 +21,8 @@ app.controller("FireflyController", function ($scope, $interval) {
                 }
                 $scope.quilt[x][y] = obj;
                 var squareColor = $scope.colorConverter($scope.quilt[x][y]);
-                    drawMe(squareColor);                                       
-           
+                $scope.drawMe(squareColor);
+
             }
         }
         //wiring the grid
@@ -42,13 +42,14 @@ app.controller("FireflyController", function ($scope, $interval) {
                 }
             }
         }
+        // window.quilt = $scope.quilt; // use to view quilt values
         return $scope.quilt;
     }//end of colorLayer function
 
     //syncron --v      package com.Atavia;
     $scope.syncron = function (obj) {
         var color = ["red", "green", "blue"]
-          //here is the syncro logic
+        //here is the syncro logic
         for (n = 0; n < 3; n++) {
             var tint = color[n];
             // if (color != "red" && color != "green" && color != "blue") {
@@ -56,7 +57,7 @@ app.controller("FireflyController", function ($scope, $interval) {
             // }
             var blockValue = 0;
             //short[] test = new short[1];
-                var buddies = 0;
+            var buddies = 0;
             for (var i = 0; i < 8; i++) {
                 var test = obj.neighbors[i][tint] - obj[tint];
                 var flag = 0;
@@ -71,7 +72,7 @@ app.controller("FireflyController", function ($scope, $interval) {
                     buddies--;
                 }
                 blockValue += obj.neighbors[i][tint];
-                if (!flag) {
+                if (flag == 0) {
                     if (test < 0) {
                         buddies--;
                     } else {
@@ -84,20 +85,41 @@ app.controller("FireflyController", function ($scope, $interval) {
             //public SyncroLogicResult() {
             var result = obj[tint];
             //if (average-exam[0] ==0); {result = exam[0];} <<--this line not needed
-            if (average - result < 0 && average - result > -51 && buddies < 0) {
+            if (average - result <= 0 && average - result > -51 && buddies <= 0) {
                 result -= 1;
+                if (buddies < 0) {
+                    if (buddies < -4) {
+                        result -= 2;
+                    } else {
+                        result -= 1
+                    }
+                }
                 if (result < 0) {
                     result += 256;
                 }
             }
-            if (average - result > 0 && average - result < 51 && buddies >0) {
+            if (average - result >= 0 && average - result < 51 && buddies >= 0) {
                 result += 1;
+                if (buddies > 0) {
+                    if (buddies > 4) {
+                        result += 2;
+                    } else {
+                        result += 1
+                    }
+                }
                 if (result > 255) {
                     result -= 256;
                 }
             }
-            if (average - result >= 51 && average - result < 101 && buddies >0) {
+            if (average - result >= 51 && average - result < 101 && buddies >= 0) {
                 result += 2;
+                if (buddies > 0) {
+                    if (buddies > 4) {
+                        result += 2;
+                    } else {
+                        result += 1
+                    }
+                }
                 if (result > 255) {
                     result -= 256;
                 }
@@ -122,75 +144,84 @@ app.controller("FireflyController", function ($scope, $interval) {
             for (var y = 0; y < 80; y++) {
                 $scope.syncron($scope.quilt[x][y]);
                 //print out quilt obj here ...........
-               
-                    var squareColor = $scope.colorConverter($scope.quilt[x][y]);
-                    drawMe(squareColor);                                       
+
+                var squareColor = $scope.colorConverter($scope.quilt[x][y]);
+                $scope.drawMe(squareColor);
             }//end of y loop
         }//end of x loop
     }//end nightTime function 
 
-    drawMe = function (squareColor) {
-                $(document).ready(function () {
-                    var unitSize = 6; // width (and height) of one square
-                    var unitsWide = 80; // number of squares along x-axis
-                    var unitsTall = 80; // number of squares along y-axis
-                    var field = $('#field').css({
-                        overflow: 'hidden',
-                        border: '16px solid #000000',
-                        width: unitSize * unitsWide + 32
-                    });
+    $scope.drawMe = function (squareColor) {
+        $(document).ready(function () {
+            var unitSize = 6; // width (and height) of one square
+            var unitsWide = 80; // number of squares along x-axis
+            var unitsTall = 80; // number of squares along y-axis
+            var field = $('#field').css({
+                overflow: 'hidden',
+                border: '16px solid #000000',
+                width: unitSize * unitsWide + 32
+            });
 
-                    // var field = $('#field');
-                    $('<span class="square"></span>').css({
-                        display: 'block',
-                        float: 'left',
-                        // position: fixed,
-                        // top: y * unitSize,
-                        // left: x * unitSize,
-                        width: unitSize,
-                        height: unitSize,
-                        'background-color': squareColor
-                    }).appendTo(field);
-                    // $(window).trigger('resize'); //attempt to force redraw
+            // var field = $('#field');
+            $('<span class="square"></span>').css({
+                display: 'block',
+                float: 'left',
+                // position: fixed,
+                // top: y * unitSize,
+                // left: x * unitSize,
+                width: unitSize,
+                height: unitSize,
+                'background-color': squareColor
+            }).appendTo(field);
+            // $(window).trigger('resize'); //attempt to force redraw
 
-                });   
-}// end of drawMe function
+        });
+    }// end of drawMe function
 
 
     // colors converted to hex values here --v
     $scope.colorConverter = function (obj) {
         var colorOut = "#";
         if (!$scope.redish) {
-            colorOut += 00;
+            colorOut += "00";
         } else {
+            if (obj.red.toString(16).length == 1) {
+                colorOut += "0";
+            }
             colorOut += obj.red.toString(16);
         }
         if (!$scope.greenish) {
-            colorOut += 00;
-        }else{
+            colorOut += "00";
+        } else {
+            if (obj.green.toString(16).length == 1) {
+                colorOut += "0"
+            }
             colorOut += obj.green.toString(16);
         }
         if (!$scope.blueish) {
-            colorOut += 00;
-        }else{
+            colorOut += "00";
+        } else {
+            if (obj.blue.toString(16).length == 1) {
+                colorOut += "0"
+            }
             colorOut += obj.blue.toString(16);
-        }    
+        }
         return colorOut;
     }
- 
-// timeout function that will allow for updating the view --v    
+
+    // timeout function that will allow for updating the view --v    
     $scope.waitForMe = function () {
         if ($scope.btnText === "Start") {
             $scope.colorLayer();
-        }     
+        }
         // var count = 5;
         // var x = $interval(function(){  
         // for (var ticks = 0; ticks < 5; ticks++){
-            // count--;
-            $scope.nightTime();
-            // if (!$scope.reddish || !$scope.greenish || !$scope.blueish) {
-            //     // $interval.cancel(x)
-            // }
+        // count--;
+        $scope.nightTime();
+        // if (!$scope.reddish || !$scope.greenish || !$scope.blueish) {
+        //     // $interval.cancel(x)
+        // }
         // } //, 3000 )
     }
 })
