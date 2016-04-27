@@ -61,12 +61,12 @@ app.controller("FireflyController", function ($scope, $interval) {
             for (var i = 0; i < 8; i++) {
                 var test = obj.neighbors[i][tint] - obj[tint];
                 var flag = 0;
-                if (test < -150) {
+                if (test < -128) {
                     blockValue += 256;
                     flag = 1;
                     buddies++;
                 }
-                if (test > 150) {
+                if (test > 128) {
                     blockValue -= 256;
                     flag = 1;
                     buddies--;
@@ -85,45 +85,50 @@ app.controller("FireflyController", function ($scope, $interval) {
             //public SyncroLogicResult() {
             var result = obj[tint];
             //if (average-exam[0] ==0); {result = exam[0];} <<--this line not needed
-            if (average - result <= 0 && average - result > -51 && buddies <= 0) {
+            // if (average - result <= 0 && average - result > -51 && buddies <= 0) {
+            // code to make the color less as result --v
+            if (buddies < 0) {
                 result -= 1;
-                if (buddies < 0) {
-                    if (buddies < -4) {
-                        result -= 2;
-                    } else {
-                        result -= 1
-                    }
-                }
-                if (result < 0) {
-                    result += 256;
-                }
             }
-            if (average - result >= 0 && average - result < 51 && buddies >= 0) {
+            if (buddies < -4) {
+                result -= 1;
+            }
+            if (average - obj[tint] < 0) {
+                result -= 1
+            }
+
+            if (result < 0) {
+                result += 256;
+            }
+
+            // code to make the color greater as result --v
+            // if (average - result >= 0 && average - result < 51 && buddies >= 0) {
+            if (buddies > 0) {
                 result += 1;
-                if (buddies > 0) {
-                    if (buddies > 4) {
-                        result += 2;
-                    } else {
-                        result += 1
                     }
+                    if (buddies > 4) {
+                        result += 1;
+                    }
+                    if(average - obj[tint] > 0) {
+                        result += 1
                 }
                 if (result > 255) {
                     result -= 256;
                 }
-            }
-            if (average - result >= 51 && average - result < 101 && buddies >= 0) {
-                result += 2;
-                if (buddies > 0) {
-                    if (buddies > 4) {
-                        result += 2;
-                    } else {
-                        result += 1
-                    }
-                }
-                if (result > 255) {
-                    result -= 256;
-                }
-            }
+            
+            // if (average - result >= 51 && average - result < 101 && buddies >= 0) {
+            //     result += 2;
+            //     if (buddies > 0) {
+            //         if (buddies > 4) {
+            //             result += 2;
+            //         } else {
+            //             result += 1
+            //         }
+            //     }
+            //     if (result > 255) {
+            //         result -= 256;
+            //     }
+            // }
             //return;//code here needs to take care of the "no change" case 
             obj[tint] = result;
         }
