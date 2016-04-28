@@ -1,8 +1,9 @@
 app.controller("FireflyController", function ($scope, $interval) {
     $scope.btnText = "Start";
-    $scope.redish = true
-    $scope.greenish = true
-    $scope.blueish = true
+    $scope.redish = true;
+    $scope.greenish = true;
+    $scope.blueish = true;
+    $scope.iterations = 0;
     //color layer --v
 
     $scope.quilt = [];
@@ -223,6 +224,7 @@ app.controller("FireflyController", function ($scope, $interval) {
         // var x = $interval(function(){  
         // for (var ticks = 0; ticks < 5; ticks++){
         // count--;
+        $scope.iterations++;
         $scope.nightTime();
         // if (!$scope.reddish || !$scope.greenish || !$scope.blueish) {
         //     // $interval.cancel(x)
