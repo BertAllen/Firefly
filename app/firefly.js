@@ -94,9 +94,9 @@ app.controller("FireflyController", function ($scope, $interval) {
             if (buddies < -4) {
                 result -= 1;
             }
-            if (average - obj[tint] < 0) {
-                result -= 1
-            }
+            // if (average - obj[tint] < 0) {
+            //     result -= 1
+            // }
 
             if (result < 0) {
                 result += 256;
@@ -106,17 +106,17 @@ app.controller("FireflyController", function ($scope, $interval) {
             // if (average - result >= 0 && average - result < 51 && buddies >= 0) {
             if (buddies > 0) {
                 result += 1;
-                    }
-                    if (buddies > 4) {
-                        result += 1;
-                    }
-                    if(average - obj[tint] > 0) {
-                        result += 1
-                }
-                if (result > 255) {
-                    result -= 256;
-                }
-            
+            }
+            if (buddies > 4) {
+                result += 1;
+            }
+            // if (average - obj[tint] > 0) {
+            //     result += 1
+            // }
+            if (result > 255) {
+                result -= 256;
+            }
+
             // if (average - result >= 51 && average - result < 101 && buddies >= 0) {
             //     result += 2;
             //     if (buddies > 0) {
