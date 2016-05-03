@@ -1,9 +1,10 @@
 app.controller("FireflyController", function ($scope, $interval) {
     $scope.btnText = "Start";
-    $scope.hitme =0;
+
     $scope.redish = true;
     $scope.greenish = true;
     $scope.blueish = true;
+    $scope.iterations = 0;
     //color layer --v
 
     $scope.quilt = [];
@@ -91,13 +92,13 @@ app.controller("FireflyController", function ($scope, $interval) {
             // if (average - result <= 0 && average - result > -51 && buddies <= 0) {
                 
             // code to make the color less as result --v
-            if (buddies < 0 && buddies > -7) {
-                result --;
+
+            if (buddies < 0) {
+                result -= 1;
             }
-            // if (buddies < -3 && buddies > -7) {
-            //     result -= 1;
-            // }
-            
+            if (buddies < -4) {
+                result -= 1;
+            }
             // if (average - obj[tint] < 0) {
             //     result -= 1
             // }
@@ -108,17 +109,15 @@ app.controller("FireflyController", function ($scope, $interval) {
 
             // code to make the color greater as result --v
             // if (average - result >= 0 && average - result < 51 && buddies >= 0) {
-            if (buddies > 0 && buddies < 7) {
-                result ++;
+
+            if (buddies > 0) {
+                result += 1;
             }
-            // if (buddies > 2 && buddies < 5) {
-            //     result += 2;
-            // }
-            // if (buddies > 4 && buddies < 7) {
-            //     result += 1;
-            // }
-            //     if(average - obj[tint] > 0) {
-            //         result += 1
+            if (buddies > 4) {
+                result += 1;
+            }
+            // if (average - obj[tint] > 0) {
+            //     result += 1
             // }
             if (result > 255) {
                 result -= 256;
@@ -232,6 +231,7 @@ app.controller("FireflyController", function ($scope, $interval) {
         // var x = $interval(function(){  
         // for (var ticks = 0; ticks < 5; ticks++){
         // count--;
+        $scope.iterations++;
         $scope.nightTime();
         // if (!$scope.reddish || !$scope.greenish || !$scope.blueish) {
         //     // $interval.cancel(x)
