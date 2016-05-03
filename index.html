@@ -11,12 +11,12 @@
 </head>
 <body style="background: #444;" ng-controller="FireflyController as fc">
     <!--{{2+2}}-->
-    <button ng-click="waitForMe()">{{btnText}}</button>
-    <label for="Redish"></label>
+    <button ng-click="waitForMe()">{{btnText}}: Iterations = {{hitme}}</button>
+    <label for="Redish" style="color: white">Red Channel</label>
     <input name="Redish" type="checkbox" ng-model="redish">
-    <label for="Greenish"></label>
+    <label for="Greenish" style="color: white">Green Channel</label>
     <input name="Greenish" type="checkbox" ng-model="greenish">
-    <label for="Blueish"></label>
+    <label for="Blueish" style="color: white">Blue Channel</label>
     <input name="Blueish" type="checkbox" ng-model="blueish">
     <!--<div ng-repeat="bush in quilt track by $index">
             <div ng-repeat="bug in bush track by $index">-->

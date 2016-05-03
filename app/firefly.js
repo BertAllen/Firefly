@@ -1,8 +1,9 @@
 app.controller("FireflyController", function ($scope, $interval) {
     $scope.btnText = "Start";
-    $scope.redish = true
-    $scope.greenish = true
-    $scope.blueish = true
+    $scope.hitme =0;
+    $scope.redish = true;
+    $scope.greenish = true;
+    $scope.blueish = true;
     //color layer --v
 
     $scope.quilt = [];
@@ -42,7 +43,7 @@ app.controller("FireflyController", function ($scope, $interval) {
                 }
             }
         }
-        // window.quilt = $scope.quilt; // use to view quilt values
+        window.quilt = $scope.quilt; // use to view quilt values
         return $scope.quilt;
     }//end of colorLayer function
 
@@ -64,19 +65,21 @@ app.controller("FireflyController", function ($scope, $interval) {
                 if (test < -128) {
                     blockValue += 256;
                     flag = 1;
-                    buddies++;
+                    ++buddies;
                 }
                 if (test > 128) {
                     blockValue -= 256;
                     flag = 1;
-                    buddies--;
+                    --buddies;
                 }
                 blockValue += obj.neighbors[i][tint];
                 if (flag == 0) {
+                    if(test != 0){
                     if (test < 0) {
-                        buddies--;
+                        --buddies;
                     } else {
-                        buddies++;
+                        ++buddies;
+                    }
                     }
                 }
             }
@@ -86,16 +89,18 @@ app.controller("FireflyController", function ($scope, $interval) {
             var result = obj[tint];
             //if (average-exam[0] ==0); {result = exam[0];} <<--this line not needed
             // if (average - result <= 0 && average - result > -51 && buddies <= 0) {
+                
             // code to make the color less as result --v
-            if (buddies < 0) {
-                result -= 1;
+            if (buddies < 0 && buddies > -7) {
+                result --;
             }
-            if (buddies < -4) {
-                result -= 1;
-            }
-            if (average - obj[tint] < 0) {
-                result -= 1
-            }
+            // if (buddies < -3 && buddies > -7) {
+            //     result -= 1;
+            // }
+            
+            // if (average - obj[tint] < 0) {
+            //     result -= 1
+            // }
 
             if (result < 0) {
                 result += 256;
@@ -103,19 +108,22 @@ app.controller("FireflyController", function ($scope, $interval) {
 
             // code to make the color greater as result --v
             // if (average - result >= 0 && average - result < 51 && buddies >= 0) {
-            if (buddies > 0) {
-                result += 1;
-                    }
-                    if (buddies > 4) {
-                        result += 1;
-                    }
-                    if(average - obj[tint] > 0) {
-                        result += 1
-                }
-                if (result > 255) {
-                    result -= 256;
-                }
-            
+            if (buddies > 0 && buddies < 7) {
+                result ++;
+            }
+            // if (buddies > 2 && buddies < 5) {
+            //     result += 2;
+            // }
+            // if (buddies > 4 && buddies < 7) {
+            //     result += 1;
+            // }
+            //     if(average - obj[tint] > 0) {
+            //         result += 1
+            // }
+            if (result > 255) {
+                result -= 256;
+            }
+
             // if (average - result >= 51 && average - result < 101 && buddies >= 0) {
             //     result += 2;
             //     if (buddies > 0) {
@@ -145,15 +153,15 @@ app.controller("FireflyController", function ($scope, $interval) {
         //     $scope.btnText = "Start";
         // }
 
-        for (var x = 0; x < 80; x++) {
-            for (var y = 0; y < 80; y++) {
+        for (var y = 0; y < 80; y++) {
+            for (var x = 0; x < 80; x++) {
                 $scope.syncron($scope.quilt[x][y]);
                 //print out quilt obj here ...........
 
                 var squareColor = $scope.colorConverter($scope.quilt[x][y]);
                 $scope.drawMe(squareColor);
-            }//end of y loop
-        }//end of x loop
+            }//end of x loop
+        }//end of y loop
     }//end nightTime function 
 
     $scope.drawMe = function (squareColor) {
@@ -219,6 +227,7 @@ app.controller("FireflyController", function ($scope, $interval) {
         if ($scope.btnText === "Start") {
             $scope.colorLayer();
         }
+        $scope.hitme++;
         // var count = 5;
         // var x = $interval(function(){  
         // for (var ticks = 0; ticks < 5; ticks++){
