@@ -1,4 +1,5 @@
-app.controller("FireflyController", function ($scope, $interval) {
+angular.module("MasterController", [])
+    .controller("FireflyController", function ($scope, $interval) {
     $scope.btnText = "Start";
     $scope.redish = true;
     $scope.greenish = true;
@@ -157,6 +158,7 @@ app.controller("FireflyController", function ($scope, $interval) {
         }//end of x loop
     }//end nightTime function 
 
+// beginning of drawMe function ..................................    
     $scope.drawMe = function (squareColor) {
         $(document).ready(function () {
             var unitSize = 6; // width (and height) of one square
@@ -168,21 +170,17 @@ app.controller("FireflyController", function ($scope, $interval) {
                 width: unitSize * unitsWide + 32
             });
 
-            // var field = $('#field');
             $('<span class="square"></span>').css({
                 display: 'block',
                 float: 'left',
-                // position: fixed,
-                // top: y * unitSize,
-                // left: x * unitSize,
+
                 width: unitSize,
                 height: unitSize,
                 'background-color': squareColor
             }).appendTo(field);
-            // $(window).trigger('resize'); //attempt to force redraw
 
         });
-    }// end of drawMe function
+    }// end of drawMe function .........................
 
 
     // colors converted to hex values here --v
