@@ -22,9 +22,9 @@ angular.module("MasterController", [])
                     // xx: x,
                     // yy: y,
                 }
+                obj.netColor = $scope.colorConverter(obj);
                 $scope.quilt[x][y] = obj;
-                var squareColor = $scope.colorConverter($scope.quilt[x][y]);
-                $scope.drawMe(squareColor);
+                $scope.drawMe(obj.netColor);
 
             }
         }
@@ -158,8 +158,8 @@ angular.module("MasterController", [])
                 $scope.syncron($scope.quilt[x][y]);
                 //print out quilt obj here ...........
 
-                var squareColor = $scope.colorConverter($scope.quilt[x][y]);
-                $scope.drawMe(squareColor);
+                $scope.quilt[x][y].netColor = $scope.colorConverter($scope.quilt[x][y]);
+                $scope.drawMe($scope.quilt[x][y].netColor);
             }//end of x loop
         }//end of y loop
     }//end nightTime function 
@@ -186,7 +186,8 @@ angular.module("MasterController", [])
             }).appendTo(field);
 
         });
-    }// end of drawMe function .........................
+    }
+    // end of drawMe function .........................
 
 
     // colors converted to hex values here --v
