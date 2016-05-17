@@ -9,6 +9,7 @@ angular.module("MasterController", [])
     //color layer --v
 
     $scope.quilt = [];
+    var data = [];
     $scope.colorLayer = function () {
         //populating the grid    
         for (var x = 0; x < 80; x++) {
@@ -19,15 +20,17 @@ angular.module("MasterController", [])
                     green: Math.floor(Math.random() * 256),
                     blue: Math.floor(Math.random() * 256),
                     neighbors: [],
-                    // xx: x,
-                    // yy: y,
+                    xx: x,
+                    yy: y,
                 }
                 obj.netColor = $scope.colorConverter(obj);
                 $scope.quilt[x][y] = obj;
-                $scope.drawMe(obj.netColor);
+                data.push($scope.quilt[x][y]);
+                // $scope.drawMe(obj.netColor);
 
             }
         }
+        dThreeDraw(data);
         //wiring the grid
         for (var x = 0; x < 80; x++) {
             for (var y = 0; y < 80; y++) {
@@ -152,16 +155,20 @@ angular.module("MasterController", [])
         // else {
         //     $scope.btnText = "Start";
         // }
+        var loops = 0;
+        while (loops < 10) {
+            for (var y = 0; y < 80; y++) {
+                for (var x = 0; x < 80; x++) {
+                    $scope.syncron($scope.quilt[x][y]);
+                    //print out quilt obj here ...........
 
-        for (var y = 0; y < 80; y++) {
-            for (var x = 0; x < 80; x++) {
-                $scope.syncron($scope.quilt[x][y]);
-                //print out quilt obj here ...........
-
-                $scope.quilt[x][y].netColor = $scope.colorConverter($scope.quilt[x][y]);
-                $scope.drawMe($scope.quilt[x][y].netColor);
-            }//end of x loop
-        }//end of y loop
+                    $scope.quilt[x][y].netColor = $scope.colorConverter($scope.quilt[x][y]);
+                    // $scope.drawMe($scope.quilt[x][y].netColor);
+                }//end of x loop
+            }//end of y loop
+            dThreeDraw(data);
+            loops++;
+        }
     }//end nightTime function 
 
 // beginning of drawMe function ..................................    
@@ -188,6 +195,25 @@ angular.module("MasterController", [])
         });
     }
     // end of drawMe function .........................
+
+// start of d3 drawing function .....
+        dThreeDraw = function (data) {
+            var svg = d3.selectAll("svg");
+                // .attr("width", 480)
+                // .attr("height", 480);
+            debugger;
+            var square = svg.selectAll("rect")
+                .data(data)
+                .attr("width", 6).attr("height", 6)
+
+            square.exit().remove();
+
+            square.enter().append("rect")
+                .attr("x", function (d) { return d.xx * 6; } )
+                .attr("y", function (d) { return d.yy * 6; } );
+            
+            square.attr("fill", function (d) { return d.netColor } );
+}// end of d3 drawing function
 
 
     // colors converted to hex values here --v
