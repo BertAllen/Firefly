@@ -1,6 +1,7 @@
 angular.module("MasterController", [])
     .controller("FireflyController", function ($scope, $interval) {
     $scope.btnText = "Start";
+
     $scope.redish = true;
     $scope.greenish = true;
     $scope.blueish = true;
@@ -44,7 +45,7 @@ angular.module("MasterController", [])
                 }
             }
         }
-        // window.quilt = $scope.quilt; // use to view quilt values
+        window.quilt = $scope.quilt; // use to view quilt values
         return $scope.quilt;
     }//end of colorLayer function
 
@@ -66,19 +67,21 @@ angular.module("MasterController", [])
                 if (test < -128) {
                     blockValue += 256;
                     flag = 1;
-                    buddies++;
+                    ++buddies;
                 }
                 if (test > 128) {
                     blockValue -= 256;
                     flag = 1;
-                    buddies--;
+                    --buddies;
                 }
                 blockValue += obj.neighbors[i][tint];
                 if (flag == 0) {
+                    if(test != 0){
                     if (test < 0) {
-                        buddies--;
+                        --buddies;
                     } else {
-                        buddies++;
+                        ++buddies;
+                    }
                     }
                 }
             }
@@ -88,7 +91,9 @@ angular.module("MasterController", [])
             var result = obj[tint];
             //if (average-exam[0] ==0); {result = exam[0];} <<--this line not needed
             // if (average - result <= 0 && average - result > -51 && buddies <= 0) {
+                
             // code to make the color less as result --v
+
             if (buddies < 0) {
                 result -= 1;
             }
@@ -105,6 +110,7 @@ angular.module("MasterController", [])
 
             // code to make the color greater as result --v
             // if (average - result >= 0 && average - result < 51 && buddies >= 0) {
+
             if (buddies > 0) {
                 result += 1;
             }
@@ -147,15 +153,15 @@ angular.module("MasterController", [])
         //     $scope.btnText = "Start";
         // }
 
-        for (var x = 0; x < 80; x++) {
-            for (var y = 0; y < 80; y++) {
+        for (var y = 0; y < 80; y++) {
+            for (var x = 0; x < 80; x++) {
                 $scope.syncron($scope.quilt[x][y]);
                 //print out quilt obj here ...........
 
                 var squareColor = $scope.colorConverter($scope.quilt[x][y]);
                 $scope.drawMe(squareColor);
-            }//end of y loop
-        }//end of x loop
+            }//end of x loop
+        }//end of y loop
     }//end nightTime function 
 
 // beginning of drawMe function ..................................    
@@ -218,6 +224,7 @@ angular.module("MasterController", [])
         if ($scope.btnText === "Start") {
             $scope.colorLayer();
         }
+        $scope.hitme++;
         // var count = 5;
         // var x = $interval(function(){  
         // for (var ticks = 0; ticks < 5; ticks++){
